@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/build/pfo_2.0/localpycos" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (pfo2_0)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
