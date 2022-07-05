@@ -59,7 +59,7 @@
  [],
  False,
  False,
- 1656948776,
+ 1657021887,
  [('run',
    '/run/media/bantikgames/SEMYON/PythonPetProjects/pfo2_0/venv/lib/python3.10/site-packages/PyInstaller/bootloader/Linux-64bit-intel/run',
    'EXECUTABLE')])

@@ -41,19 +41,13 @@ def get_user_dir(name: str) -> str:
     return path
 
 
-# Выводим стартовое сообщение
-if "ru_RU" in sys_lang:
-    console.input("[bold green]Введите название папки с загрузками (Загрузки): ") or get_user_dir("DOWNLOAD")
-else:
-    console.input("[bold green]Enter the name of the downloads folder (Downloads): ") or get_user_dir("DOWNLOAD")
-
 # Получаем список файлов в папке с загрузками
 file_list = os.listdir(get_user_dir("DOWNLOAD"))
 
 # Создаём списки с файлами
 video_ext = [".3gp", ".avi", ".flv", ".m4v", ".mkv", ".mov", ".mp4", ".wmv", ".webm"]
 pictures_ext = [".raw", ".jpg", ".tiff", ".psd", ".bmp", ".gif", ".png", ".jp2", ".jpeg"]
-docs_ext = [".doc", ".docx", ".txt", ".rtf", ".pdf", ".fb2", ".djvu",
+docs_ext = [".doc", ".docx", ".odt", ".txt", ".rtf", ".pdf", ".fb2", ".djvu",
             ".xls", ".xlsx", ".ppt", ".pptx",
             ".mdb", ".accdb", ".rar", ".zip", ".7z"]
 music_ext = [".mp3", ".aac", ".flac", ".mpc", ".wma", ".wav"]
@@ -94,7 +88,26 @@ def delete_files():
             os.remove(get_user_dir("DOWNLOAD") + "/" + file_to_remove)
 
 
+def what_next():
+    count = 0
+    for remaining_files in os.listdir(get_user_dir("DOWNLOAD")):
+        if os.path.isfile(os.path.join(get_user_dir("DOWNLOAD"), remaining_files)):
+            count += 1
+        if count > 0:
+            # Спрашиваем пользователя о дальнейших действиях
+            next_msg = console.input(next_msg_text) or "1"
+            if next_msg == "2":
+                # Удаляем файлы
+                for _ in track(range(100), description=delete_progress_text):
+                    delete_files()
+
+
 if __name__ == '__main__':
+    # Выводим стартовое сообщение
+    if "ru_RU" in sys_lang:
+        console.input("[bold green]Введите название папки с загрузками (Загрузки): ") or get_user_dir("DOWNLOAD")
+    else:
+        console.input("[bold green]Enter the name of the downloads folder (Downloads): ") or get_user_dir("DOWNLOAD")
     # Определяем язык статус-бара прогресса
     if "ru_RU" in sys_lang:
         progress_text = "[bold blue]Перемещаем файлы"
@@ -112,10 +125,6 @@ if __name__ == '__main__':
         move_music(music_ext, file_list)
         move_pictures(pictures_ext, file_list)
         move_docs(docs_ext, file_list)
-    # Спрашиваем пользователя о дальнейших действиях
-    next_msg = console.input(next_msg_text) or "1"
-    if next_msg == "2":
-        # Удаляем файлы
-        for _ in track(range(100), description=delete_progress_text):
-            delete_files()
+    # Определяем есть ли в директории оставшиеся файлы и если да, то спрашиваем пользователя что дальше
+    what_next()
     console.print(finish_msg_text, style="bold green")
