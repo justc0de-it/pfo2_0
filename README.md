@@ -17,7 +17,7 @@
 
 3. Сделайте скрипт launch запускаемым
 
-<pre><code>chroot +x launch.sh</code></pre>
+<pre><code>chmod +x launch.sh</code></pre>
 
 4. Запустите программу и следуйте указаниям в терминале
 
