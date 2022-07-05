@@ -6,6 +6,7 @@ import shutil
 from dotenv import dotenv_values
 from rich.console import Console
 from rich.progress import track
+from art import *
 
 # Определяем консоль для вывода красивых сообщений
 console = Console()
@@ -103,6 +104,9 @@ def what_next():
 
 
 if __name__ == '__main__':
+    # Выводим красивое название программы
+    start_msg = text2art("PFO 2.0")
+    print(start_msg)
     # Выводим стартовое сообщение
     if "ru_RU" in sys_lang:
         console.input("[bold green]Введите название папки с загрузками (Загрузки): ") or get_user_dir("DOWNLOAD")
