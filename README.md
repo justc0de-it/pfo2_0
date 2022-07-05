@@ -9,19 +9,19 @@
 ## Запуск и использование
 1. Первым делом необходимо скачать PFO на свой компьютер при помощи GIT:
 
-    git clone https://github.com/bantikgames/pfo2_0
+<pre><code>git clone https://github.com/bantikgames/pfo2_0</code></pre>
 
 2. Перейдите в скачанную папку
 
-    cd pfo2_0
+<pre><code>cd pfo2_0</code></pre>
 
 3. Сделайте скрипт launch запускаемым
 
-    chdom +x launch.sh
+<pre><code>chroot +x launch.sh</code></pre>
 
 4. Запустите программу и следуйте указаниям в терминале
 
-    ./launch.sh
+<pre><code>./launch.sh</code></pre>
 
 ## Скриншоты
 
