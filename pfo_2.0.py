@@ -1,7 +1,9 @@
 # Импорт необходимых библиотек
 import locale
 import os
+import os.path
 import shutil
+import glob
 
 from dotenv import dotenv_values
 from rich.console import Console
@@ -106,29 +108,35 @@ def what_next():
 if __name__ == '__main__':
     # Выводим красивое название программы
     start_msg = text2art("PFO 2.0")
-    print(start_msg)
-    # Выводим стартовое сообщение
+    # Выводим стартовое сообщение и  определяем язык статус-бара прогресса
     if "ru_RU" in sys_lang:
         console.input("[bold green]Введите название папки с загрузками (Загрузки): ") or get_user_dir("DOWNLOAD")
-    else:
-        console.input("[bold green]Enter the name of the downloads folder (Downloads): ") or get_user_dir("DOWNLOAD")
-    # Определяем язык статус-бара прогресса
-    if "ru_RU" in sys_lang:
         progress_text = "[bold blue]Перемещаем файлы"
         delete_progress_text = "[bold red]Удаляем файлы"
         next_msg_text = "[bold violet]Удалить оставшиеся файлы? 1 - нет, 2 - да (1): "
-        finish_msg_text = "Программа завершила работу"
+        finish_msg_text = "Программа завершила работу."
+        close_msg_text = "В папке с загрузками нет файлов."
     else:
+        console.input("[bold green]Enter the name of the downloads folder (Downloads): ") or get_user_dir("DOWNLOAD")
         progress_text = "[bold blue]Moving files"
         delete_progress_text = "[bold red]Delete files"
         next_msg_text = "[bold violet]Delete remaining files? 1 - no, 2 - yes (1): "
-        finish_msg_text = "The program has ended"
-    # Выводим статус-бар с прогрессом перемещения
-    for _ in track(range(100), description=progress_text):
-        move_video(video_ext, file_list)
-        move_music(music_ext, file_list)
-        move_pictures(pictures_ext, file_list)
-        move_docs(docs_ext, file_list)
-    # Определяем есть ли в директории оставшиеся файлы и если да, то спрашиваем пользователя что дальше
-    what_next()
-    console.print(finish_msg_text, style="bold green")
+        finish_msg_text = "The program has ended."
+        close_msg_text = "There are no files in the downloads folder."
+
+    # Считаем, сколько файлов в каталоге Загрузок
+    numbers_of_files = sum(os.path.isfile(f) for f in glob.glob(get_user_dir("DOWNLOAD")))
+    # Если в папке Загрузки есть файлы, то выполняем перемещение
+    if numbers_of_files > 0:
+        # Выводим статус-бар с прогрессом перемещения
+        for _ in track(range(100), description=progress_text):
+            move_video(video_ext, file_list)
+            move_music(music_ext, file_list)
+            move_pictures(pictures_ext, file_list)
+            move_docs(docs_ext, file_list)
+        # Определяем есть ли в директории оставшиеся файлы и если да, то спрашиваем пользователя что дальше
+        what_next()
+        console.print(finish_msg_text, style="bold green")
+    # Если в папке Загрузки нет файлов, то завершаем программу
+    else:
+        console.print(close_msg_text, style="bold red")
