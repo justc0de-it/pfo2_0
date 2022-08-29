@@ -9,7 +9,7 @@
 ## Запуск и использование
 1. Первым делом необходимо скачать PFO на свой компьютер при помощи GIT:
 
-<pre><code>git clone https://github.com/bantikgames/pfo2_0</code></pre>
+<pre><code>git clone https://github.com/justc0de-it/pfo2_0</code></pre>
 
 2. Перейдите в скачанную папку
 
